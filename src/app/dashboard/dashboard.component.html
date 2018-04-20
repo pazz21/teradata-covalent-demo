@@ -1,0 +1,91 @@
+<td-layout-nav logo="assets:covalent" navigationRoute="/">
+  <button mat-icon-button td-menu-button tdLayoutToggle>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <div td-toolbar-content layout="row" layout-align="center center" flex>
+    <span>Demo Application</span>
+    <span flex></span>
+    <a mat-icon-button matTooltip="Docs" href="https://teradata.github.io/covalent/" target="_blank"><mat-icon>chrome_reader_mode</mat-icon></a>
+    <a mat-icon-button matTooltip="Github" href="https://github.com/teradata/covalent" target="_blank"><mat-icon svgIcon="assets:github"></mat-icon></a>
+  </div>
+  
+  <mat-toolbar color="accent">
+      <span center >Please register your details first</span>
+    </mat-toolbar>
+  <td-steps mode="horizontal">
+  <td-step #step1 label="Basic Details" sublabel="Fill these details." [active]="true" [state]="stateStep1" [disabled]="disabled" (activated)="activeStep1Event()" (deactivated)="deactiveStep1Event()" disableRipple>
+    <ng-template td-step-label><span>Basic Details</span></ng-template>
+    Include any content you like for an active stepper
+    <td-dynamic-forms [elements]="elements">
+  <ng-template let-element ngFor [ngForOf]="elements">
+    <ng-template let-control="control" [tdDynamicFormsError]="element.name">
+      <span *ngIf="control.touched || !control.pristine">
+        <span *ngIf="control.hasError('required')">Required</span>
+        <span *ngIf="control.hasError('min')">Min value: {{element.min}}</span>
+        <span *ngIf="control.hasError('max')">Max value: {{element.max}}</span>
+        <span *ngIf="control.hasError('minlength')">Min length value: {{element.minLength}}</span>
+        <span *ngIf="control.hasError('maxlength')">Max length value: {{element.minLength}}</span>
+      </span>
+    </ng-template>
+  </ng-template>
+</td-dynamic-forms>
+    <button mat-raised-button color="primary" (click)="toggleRequiredStep1()" class="text-upper">Save</button>
+  </td-step>
+  <td-step #step2 label="Extra Details" sublabel="Fill these details." [state]="stateStep2" [disabled]="disabled" disableRipple>
+    
+    <td-dynamic-forms [elements]="elements1">
+  <ng-template let-element ngFor [ngForOf]="elements">
+    <ng-template let-control="control" [tdDynamicFormsError]="element.name">
+      <span *ngIf="control.touched || !control.pristine">
+        <span *ngIf="control.hasError('required')">Required</span>
+        <span *ngIf="control.hasError('min')">Min value: {{element.min}}</span>
+        <span *ngIf="control.hasError('max')">Max value: {{element.max}}</span>
+        <span *ngIf="control.hasError('minlength')">Min length value: {{element.minLength}}</span>
+        <span *ngIf="control.hasError('maxlength')">Max length value: {{element.minLength}}</span>
+      </span>
+    </ng-template>
+  </ng-template>
+</td-dynamic-forms>
+
+    <ng-template td-step-actions>
+      <button mat-raised-button color="primary" (click)="toggleRequiredStep2()" class="text-upper">Save</button>
+      <button mat-button (click)="step2.active = false" class="text-upper">Cancel</button>
+    </ng-template>
+  </td-step>
+  <td-step #step3 label="Complete State" sublabel="Last Step." [state]="stateStep3" [disabled]="disabled">
+    Mark this step complete.
+    <ng-template td-step-summary>
+      Fill details again.
+    </ng-template>
+    <ng-template td-step-actions>
+      <button mat-raised-button color="primary" (click)="toggleCompleteStep3()" class="text-upper">Complete</button>
+      <button mat-button (click)="step3.active = false" class="text-upper">Cancel</button>
+    </ng-template>
+  </td-step>
+</td-steps>
+  <td-layout-footer>
+    <div layout="row" layout-align="start center">
+      <span class="mat-caption">Copyright &copy; {{year}} Batman. All rights reserved</span>
+      <span flex></span>
+      <mat-icon class="mat-icon-ux" svgIcon="assets:teradata-ux"></mat-icon>
+    </div>
+  </td-layout-footer>
+</td-layout-nav>
+
+<script>
+
+export interface ITdDynamicElementConfig {
+  label?: string;
+  name: string;
+  type: TdDynamicType | TdDynamicElement;
+  required?: boolean;
+  min?: any;
+  max?: any;
+  minLength?: string;
+  maxLength?: string;
+  selections?: any[];
+  default?: any;
+  validators?: ITdDynamicElementValidator[];
+}
+
+</script>
